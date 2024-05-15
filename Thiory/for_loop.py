@@ -22,3 +22,11 @@ for mark in student_marks:
     new_student_marks.append(mark+5)
 print(new_student_marks)
 
+
+
+
+players_name =[]
+for i in range(1,6):  
+    name=input(f'player {i}:')
+    players_name.append(name)
+print(players_name)

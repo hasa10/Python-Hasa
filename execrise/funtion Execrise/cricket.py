@@ -1,105 +1,150 @@
-class CricketMarch():
+class CricketMatch():
     def start_game(self):
-        #global total_runs,wickets,current_player
-        #global playerA_runs
-        #global playerB_runs
-        #global playerA_name
-        #global playerB_name
+        #global total_runs,wickets,ball,over,batsman,player_a,player_b,player_a_runs,player_b_runs,player_a_ball,player_b_ball,star_a,star_b
+        self.total_runs=0
+        self.wickets=0
+        self.ball=0
+        self.over=0
+        self.player_a_runs=0
+        self.player_b_runs=0
+        self.player_a_ball=0
+        self.player_b_ball=0
+        self.star_a=""
+        self.star_b=""
+        self.players_name =[]
+        self.add_player_name()
+        self.player_a=self.players_name[0]
+        self.player_b=self.players_name[1]
+        self.batsman=self.player_a
 
-        playerA_name = input("Enter Player A's name: ")
-        playerB_name = input("Enter Player B's name: ")
-        print(self)
-
-        self.total_runs = 0
-        self.wickets = 0
-        self.current_player = playerA_name  # Start with Player A
-        self.playerA_runs = 0
-        self.playerB_runs = 0
-        
+    def add_player_name(self):
+        for i in range(1,6):  
+            name=input(f'player {i}:')
+            self.players_name.append(name)
+        print(self.players_name)
 
     def overs_in_match(self):
-        over = 0
-        while over < 5 and self.wickets < 4:
-            self.ball_in_over(over)
-            self.change_player(self)  # Change player after each over
-            over += 1
-        else:
-            print(f'End of Match: {over} overs')
-            self.print_final_score(self)
-
-    def ball_in_over(self,over):
-        ball = 0
-        while ball < 6 and self.wickets < 4:
-            print(f'{self.total_runs}/{self.wickets} Over: {over}.{ball}')
+        #global over ,ball
+        while self.over<2 and self.wickets < 4 :
+            self.ball_in_over() #passing argument
+            self.over += 1
+            self.over_change_player()
+        
+        self.game_over()
+        
+    def ball_in_over(self):
+        #global ball
+        self.ball=0
+        while self.ball<6 and self.wickets < 4 :
+            self.print_score()
+            self.ball+=1
             self.score_off_balls()
-            ball += 1
-        else:
-            print(f'End of Over {over}')
 
     def score_off_balls(self):
-        self.total_runs
-        self.wickets
-        #global current_player
-        #global playerA_runs
-        #global playerB_runs
+        #global total_runs
+        #global wickets
+        
+        score =input(' Score :')        
+        if score.isdigit(): #validation1     
+            score=int(score)
+            #if 0<=score<5 or score == 6 :
+            if score in (0,1,2,3,4,6):
+                runs=score 
+                self.total_runs+=runs
+                self.player_runs(score)
+                self.player_change(score)
 
-        score = input(f'{self.current_player} Score: ')
-        if score.isdigit():
-            score = int(score)
-            if score in (0, 1, 2, 3, 4, 6):
-                runs = score
-                self.total_runs += runs
-                if self.current_player == self.playerA_name:
-                    playerA_runs += runs
-                else:
-                    playerB_runs += runs
-                if runs in (1, 3):
-                    self.change_player('')
+        elif score.lower()=="w":
+            self.wickets+=1
+            if self.wickets<4:
+                self.player_change_wickets()
+
+            
+    def print_score(self):
+            self.star_mark()
+            print(f'Total {self.total_runs}/{self.wickets} over : {self.over}.{self.ball}  {self.player_a} - {self.player_a_runs} ({self.player_a_ball}) {self.star_a} / {self.player_b} - {self.player_b_runs} ({self.player_b_ball}) {self.star_b}')
+            print(self)
+
+    def game_over(self):
+        #global over,ball
+        
+        if self.wickets == 4 :
+            if self.ball ==6:
+                self.ball=0
             else:
-                print('Invalid input.')
-        elif score.lower() == 'w':
-            wickets += 1
-            if wickets == 4:
-                print('Game Over')
-            else:
-                new_player_name = input("Enter New Player's name: ")
-                if new_player_name:
-                    self.change_player(new_player_name)
-                else:
-                    print("Invalid input.")
+                self.over -=1
+        elif self.over == 2:
+            self.ball = 0
+        self.print_score()
+        print("Game Over")
+
+    def player_change(self,score):
+        #global batsman,player_a,player_b
+        if self.batsman == self.player_a:
+            self.batsman=self.player_b
         else:
-            print('Invalid input.')
-
-    def change_player(self,new_player_name=''):
-        #global current_player
-        if new_player_name:
-            self.current_player = new_player_name
-        elif self.current_player == self.playerA_name:
-            self.current_player = self.playerB_name
+            self.batsman=self.player_a
+        
+    def player_change_wickets(self):
+        #global batsman, player_a, player_b, player_a_runs, player_b_runs,player_a_ball,player_b_ball
+        if self.batsman==self.player_a:
+            self.player_a = self.players_name[self.wickets+1]
+            self.batsman=self.player_a
         else:
-            self.current_player = self.playerA_name
-
-    def print_final_score(self):
-        #global playerA_runs
-        #global playerB_runs
-        print(f"Final Score: {self.playerA_runs + self.playerB_runs} ({self.wickets} wickets)")
-        print('Game Over')
+            self.player_b = self.players_name[self.wickets+1]
+            self.batsman=self.player_b
 
 
+
+    def player_runs(self,score):
+        #global batsman,player_a,player_b,player_a_runs,player_b_runs,player_a_ball,player_b_ball
+        
+        if self.batsman==self.player_a:
+            self.player_a_runs=self.player_a_runs+score
+            self.player_a_ball=self.player_a_ball+1
+
+        else:
+            self.player_b_runs=self.player_b_runs+score
+            self.player_b_ball=self.player_b_ball+1
+
+        self.star_mark()
+
+
+    
+    def over_change_player(self):
+        #global batsman,player_a,player_b
+        if self.batsman==self.player_a:
+            self.batsman=self.player_b
+        else:
+            self.batsman=self.player_a
+
+    def star_mark(self):
+        #global star_a,star_b,player_a,batsman
+        if self.batsman ==  self.player_a:
+            self.star_a="*"
+            self.star_b=""
+        else:
+            self.star_b="*"
+            self.star_a=""
+
+    
+
+class T20 :
+    pass
+
+    
+        
 
 def main():
-    firstBat = CricketMarch()
-    secondBat = CricketMarch()
+    firstBat =CricketMatch() #instance (object)\
+    secondBat =CricketMatch() 
     firstBat.start_game()
-    firstBat.overs_in_match()
+    firstBat.overs_in_match ()
     secondBat.start_game()
-    secondBat.overs_in_match()
-    print('dwe343',firstBat)
-    print('eyyu44',secondBat)
-
+    secondBat.overs_in_match ()
+    print(firstBat)
+    print(secondBat)
+    
 if __name__ == "__main__":
     main()
     
-
-
-
