@@ -1,0 +1,44 @@
+'''dic = {"cham": 89, "dil": 90, "fgh": 87, True: 'hddy' ,(7,8):True}   #
+print(dic)
+
+print(dic['dil'])
+
+dic['cham']=56
+print(dic)
+
+dic[87]='sdfgh'
+print(dic)
+print(dic.pop('cham'))
+
+print('dic key=',dic.keys(),',list:',list(dic.keys()))
+print(dic.values())
+print(dic.items)
+print(type(dic))
+print(type(dic.items()))
+print(len(dic))
+dic.clear()
+print(dic)
+del(dic)'''
+#print(dic)
+
+
+
+my_dict = {'a':1, 'b':2, 'c':3}
+for i in my_dict.items():
+    print(f'Key:{i}')
+    print(my_dict.items())
+
+for i in my_dict.values():
+    print(f'Key:{i}')
+
+
+for i,j in my_dict.items():
+    print(f'Key:{i}, Value:{j}')
+
+
+print(my_dict.items())
+#print(my_dict.items[0])   TypeError: 'builtin_function_or_method' object is not subscriptable
+print(list(my_dict.items())[0])
+print(list(list(my_dict.items())[0]))
+
+my_dict = {'a':1, 'b':2, 'c':3}
