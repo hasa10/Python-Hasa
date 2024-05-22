@@ -12,6 +12,7 @@ class CricketMatch():
         self.star_a=""
         self.star_b=""
         self.players_name =[]
+        self.bowlers_name =[]
         self.add_player_name()
         self.player_a=self.players_name[0]
         self.player_b=self.players_name[1]
@@ -26,12 +27,23 @@ class CricketMatch():
     def overs_in_match(self):
         #global over ,ball
         while self.over<2 and self.wickets < 4 :
+            self.add_baller_name()
             self.ball_in_over() #passing argument
             self.over += 1
             self.over_change_player()
         
         self.game_over()
         
+
+    def add_baller_name(self):
+        baller= input("Enter balls")
+        if not baller in self.bawlers_name:
+            self.bawlers_name.append(baller)
+
+
+        
+        
+
     def ball_in_over(self):
         #global ball
         self.ball=0
