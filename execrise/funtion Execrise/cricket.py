@@ -11,18 +11,27 @@ class CricketMatch():
         self.player_b_ball=0
         self.star_a=""
         self.star_b=""
-        self.players_name =[]
-        self.bowlers_name =[]
+        self.player_details ={}
+        self.bawlers_name =[]
         self.add_player_name()
-        self.player_a=self.players_name[0]
-        self.player_b=self.players_name[1]
         self.batsman=self.player_a
+        self.b_4=0
+        self.b_6=0
 
     def add_player_name(self):
         for i in range(1,6):  
             name=input(f'player {i}:')
-            self.players_name.append(name)
-        print(self.players_name)
+            self.player_details [name]= {"runs":0, "balls" : 0 , "4's":0, "6's":0}
+            if i==1 :
+                self.player_a = name
+            if i==2 :
+                self.player_b = name
+            
+
+        
+            
+
+
 
     def overs_in_match(self):
         #global over ,ball
@@ -74,8 +83,7 @@ class CricketMatch():
             
     def print_score(self):
             self.star_mark()
-            print(f'Total {self.total_runs}/{self.wickets} over : {self.over}.{self.ball}  {self.player_a} - {self.player_a_runs} ({self.player_a_ball}) {self.star_a} / {self.player_b} - {self.player_b_runs} ({self.player_b_ball}) {self.star_b}')
-            print(self)
+            print(f'Total {self.total_runs}/{self.wickets} over : {self.over}.{self.ball} {self.player_a} - {self.player_details[self.player_a]["runs"]} {self.player_details[self.player_a]["balls"]} {self.player_b} ({self.player_details[self.player_b]["runs"]} /{self.player_details[self.player_b]["balls"]})')
 
     def game_over(self):
         #global over,ball
@@ -110,14 +118,12 @@ class CricketMatch():
 
     def player_runs(self,score):
         #global batsman,player_a,player_b,player_a_runs,player_b_runs,player_a_ball,player_b_ball
-        
-        if self.batsman==self.player_a:
-            self.player_a_runs=self.player_a_runs+score
-            self.player_a_ball=self.player_a_ball+1
-
-        else:
-            self.player_b_runs=self.player_b_runs+score
-            self.player_b_ball=self.player_b_ball+1
+        self.player_details[self.batsman]["runs"]+=score
+        self.player_details[self.batsman]["balls"]+=1
+        if score==4:
+            self.player_details[self.batsman]["4's"]+=1
+        elif score==6:
+            self.player_details[self.batsman]["6's"]+=1
 
         self.star_mark()
 
