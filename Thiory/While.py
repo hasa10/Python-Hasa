@@ -5,6 +5,8 @@ age=0
    # marks=marks+1
 
 
+
+
 while(True):
     age += 1
     if(age==10):
